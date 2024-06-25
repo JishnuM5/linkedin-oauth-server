@@ -19,7 +19,8 @@ app.get('/auth', async (req, res) => {
 
         res.json(response.data);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to exchange code for token' });
+        console.error('Error exchanging code for token:', error.response ? error.response.data : error.message);
+        res.status(500).json({ error: 'Failed to exchange code for token', details: error.response ? error.response.data : error.message });
     }
 });
 
