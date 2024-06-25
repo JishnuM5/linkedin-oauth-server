@@ -21,11 +21,10 @@ app.get('/auth', async (req, res) => {
         });
 
         const redirectUri = `mobileapp://auth?access_token=${response.data.access_token}&expires_in=${response.data.expires_in}&scope=${response.data.scope}&token_type=${response.data.token_type}`;
-
+        console.log(response.data);
         res.redirect(redirectUri);
     } catch (error) {
         console.error('Error response from LinkedIn:', error.response.data);
-        res.status(500).json({ error: 'We havin little problem, yeah: ' + error.response.data });
     }
 });
 
