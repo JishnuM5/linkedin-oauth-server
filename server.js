@@ -19,7 +19,7 @@ app.get('/auth', async (req, res) => {
 
         res.json(response.data);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to exchange code for token' });
+        res.status(500).json({ error: 'We havin little problem, yeah: ' + error });
     }
 });
 
