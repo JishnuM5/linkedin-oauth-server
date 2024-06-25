@@ -20,10 +20,13 @@ app.get('/auth', async (req, res) => {
             },
         });
 
-        res.json(response.data);
+        // Assuming your app has a custom scheme or a deep link
+        const redirectUri = `yourapp://auth?access_token=${response.data.access_token}&expires_in=${response.data.expires_in}&scope=${response.data.scope}&token_type=${response.data.token_type}`;
+
+        res.redirect(redirectUri);
     } catch (error) {
         console.error('Error response from LinkedIn:', error.response.data);
-        res.status(500).json({ error: 'We havin little problem, yeah: ' + error + ' Redirect: ' + process.env.REDIRECT_URI + ' ID: ' + process.env.CLIENT_ID + ' Secret: ' + process.env.CLIENT_SECRET });
+        res.status(500).json({ error: 'We havin little problem, yeah: ' + error.response.data });
     }
 });
 
