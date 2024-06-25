@@ -23,10 +23,7 @@ app.get('/auth', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         console.error('Error response from LinkedIn:', error.response.data);
-        res.status(500).json({ error: 'We havin little problem, yeah: ' + error.response.data });
-        console.log(`Redirect URI: ${process.env.REDIRECT_URI}`);
-        console.log(`Client ID: ${process.env.CLIENT_ID}`);
-        console.log(`Client Secret: ${process.env.CLIENT_SECRET}`);
+        res.status(500).json({ error: 'We havin little problem, yeah: ' + error + ' Redirect: ' + process.env.REDIRECT_URI + ' ID: ' + process.env.CLIENT_ID + ' Secret: ' + process.env.CLIENT_SECRET });
     }
 });
 
