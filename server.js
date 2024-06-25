@@ -8,6 +8,9 @@ app.get('/auth', async (req, res) => {
 
     try {
         const response = await axios.post('https://www.linkedin.com/oauth/v2/accessToken', null, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
             params: {
                 grant_type: 'authorization_code',
                 code,
@@ -19,7 +22,11 @@ app.get('/auth', async (req, res) => {
 
         res.json(response.data);
     } catch (error) {
-        res.status(500).json({ error: 'We havin little problem, yeah: ' + error });
+        console.error('Error response from LinkedIn:', error.response.data);
+        res.status(500).json({ error: 'We havin little problem, yeah: ' + error.response.data });
+        console.log(`Redirect URI: ${process.env.REDIRECT_URI}`);
+        console.log(`Client ID: ${process.env.CLIENT_ID}`);
+        console.log(`Client Secret: ${process.env.CLIENT_SECRET}`);
     }
 });
 
