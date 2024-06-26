@@ -19,9 +19,15 @@ app.get('/auth', async (req, res) => {
                 client_secret: process.env.CLIENT_SECRET,
             },
         });
+        const { access_token } = response.data;
+        const profileResponse = await axios.get('https://api.linkedin.com/v2/me', {
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+            },
+        });
+        const redirectUri = `yourapp://auth?access_token=${access_token}&profile=${encodeURIComponent(JSON.stringify(profileResponse.data))}`;
 
-        const redirectUri = `mobileapp://auth?access_token=${response.data.access_token}&expires_in=${response.data.expires_in}&scope=${response.data.scope}&token_type=${response.data.token_type}`;
-        console.log(response.data);
+        console.log(profileResponse);
         res.redirect(redirectUri);
     } catch (error) {
         console.error('Error response from LinkedIn:', error.response.data);
